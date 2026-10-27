@@ -1,15 +1,29 @@
 import { Slot } from 'expo-router';
-import { Text } from 'react-native'
+import { Pizza } from 'lucide-react-native';
+import { Dimensions, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const _layout = () => {
-    //BUtton is fine for simple pressables
+    //keyboardShouldPersistTaps closes the keyboard when you click out of it
+// * Use a `View` with an absolutely positioned `Image` instead.
 
   return (
-    <SafeAreaView>
-      <Text>AUTH _layout</Text>
-      <Slot />
-    </SafeAreaView>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+      <ScrollView className='h-full' keyboardShouldPersistTaps='handled'>
+        <View className='w-full relative h-96 bg-black'>
+          
+          {/*<ImageBackground source="" className='size-full rounded-b-lg'  resizeMode='stretch' />8*/}
+        
+          {/* Logo */}
+          <View className='self-center size-36 bg-orange-100 rounded-full absolute -bottom-12 z-10 justify-center items-center'>
+            <Pizza size={80} color="#ff6600" strokeWidth={1.5} />
+          </View>
+        </View>
+
+        <Slot />
+
+      </ScrollView>
+    </KeyboardAvoidingView>
   )
 }
 

@@ -16,6 +16,7 @@ module.exports = {
       },
       fontFamily: {
         // QUICKSAND
+        sans: ["Quicksand-Regular"],
         quicksand: ["Quicksand-Regular", "sans-serif"],
         bold: ["Quicksand-Bold", "sans-serif"],
         medium: ["Quicksand-Medium", "sans-serif"],
