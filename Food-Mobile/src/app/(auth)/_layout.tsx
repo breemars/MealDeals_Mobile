@@ -1,11 +1,18 @@
-import { Slot } from 'expo-router';
+import useAuthStore from '@/store/auth.store';
+import { Redirect, Slot } from 'expo-router';
 import { Pizza } from 'lucide-react-native';
 import { Dimensions, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
 import { SafeAreaView } from "react-native-safe-area-context";
 
-const _layout = () => {
+const AuthLayout = () => {
     //keyboardShouldPersistTaps closes the keyboard when you click out of it
 // * Use a `View` with an absolutely positioned `Image` instead.
+
+
+  //if the user is already authenticated, go right to the homepage 
+  const { isAuthenticated } = useAuthStore()
+  if(isAuthenticated) return <Redirect href="/" />
+
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -27,4 +34,4 @@ const _layout = () => {
   )
 }
 
-export default _layout
+export default AuthLayout

@@ -3,10 +3,14 @@ import { Link, router } from 'expo-router'
 import { useState } from 'react'
 import { signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
+import useAuthStore from '@/store/auth.store'
+
+
 
 const signin = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [form, setForm] = useState({ email: '', password: ''})
+  const { fetchAuthenticatedUser } = useAuthStore()
  
   const onSubmit = async() => {
     if(!form.email || !form.password) Alert.alert('Error', "Please enter valid email address and password.")
@@ -23,6 +27,10 @@ const signin = () => {
 
       Alert.alert('Succcess', "Signed-In Successfully")
       console.log("success")
+
+      //Update user info in the store
+      fetchAuthenticatedUser()
+
       router.replace("../(tabs)/")
     } catch (error : any) {
       Alert.alert("Error", error.message) 

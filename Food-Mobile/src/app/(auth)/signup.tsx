@@ -4,11 +4,13 @@ import { useState } from 'react'
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from "../../lib/firebase";
 import { createUserProfile } from '@/lib/users';
+import useAuthStore from '@/store/auth.store';
 
 const signup = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', password: ''})
+  const { fetchAuthenticatedUser } = useAuthStore()
  
   const onSubmit = async() => {
 
@@ -34,6 +36,10 @@ const signup = () => {
         await createUserProfile(form.name);
 
       Alert.alert('Succcess', "Signed-Up Successfully")
+
+      //Update user info in the store
+      fetchAuthenticatedUser()
+
       router.replace("../(tabs)/") //????????????
     } catch (error : any) {
       Alert.alert("Error", error.message) 

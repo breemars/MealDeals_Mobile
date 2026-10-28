@@ -4,8 +4,12 @@ import { SplashScreen, Stack } from "expo-router";
 import { useFonts } from 'expo-font'
 
 import { useEffect } from 'react';
+import useAuthStore from '@/store/auth.store';
 
 export default function RootLayout() {
+
+const { isLoading, fetchAuthenticatedUser } = useAuthStore()
+
 const [fontsLoaded, error] = useFonts({
   "Quicksand-Regular": require("../../assets/fonts/Quicksand-Regular.ttf"),
   "Quicksand-Bold": require("../../assets/fonts/Quicksand-Bold.ttf"),
@@ -19,6 +23,12 @@ useEffect(() => {
   if(error) throw Error;
   if(fontsLoaded) SplashScreen.hideAsync();
 }), [fontsLoaded, error]
+
+useEffect(() => {
+  fetchAuthenticatedUser()
+}, [])
+
+if(isLoading) return null; //?
   
 //Hide the default top header
   return <Stack screenOptions={{ headerShown: false }} />;
