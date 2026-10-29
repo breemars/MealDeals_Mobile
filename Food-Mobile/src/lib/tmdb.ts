@@ -20,3 +20,18 @@ export async function searchMeals(searchTerm: string) {
 
   return data.meals ?? [];
 }
+
+
+export async function getMealsByCategory(category: string) {
+
+  const url = `https://www.themealdb.com/api/json/v1/1/filter.php?c=${encodeURIComponent(category)}`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch meals by category");
+  }
+
+  const data = await response.json();
+
+  return data.meals ?? [];
+}
