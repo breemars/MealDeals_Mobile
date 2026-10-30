@@ -1,10 +1,10 @@
 import CartButton from '@/components/CartButton';
-import { getMealsByCategory, searchMeals, type Meal } from '@/lib/tmdb'
+import { getMealsByCategory, getMealsByLetter, searchMeals, type Meal } from '@/lib/tmdb'
 import { useEffect, useState } from 'react'
 import { View, Text, FlatList } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import cn from "clsx"
-import MenuCard from '@/components/MenuCard';
+import MealCard from '@/components/MealCard';
 import SearchBar from '@/components/SearchBar';
 import Filter from '@/components/Filter';
 import { useLocalSearchParams } from 'expo-router';
@@ -12,9 +12,10 @@ import { useLocalSearchParams } from 'expo-router';
 
 const search = () => {
   const [meals, setMeals] = useState<Meal[]>([]);
-  const { category, query } = useLocalSearchParams<{
+  const { category, query, letter } = useLocalSearchParams<{
     category?: string;
     query?: string;
+    letter?: string;
   }>();
 
 
@@ -37,32 +38,27 @@ const search = () => {
 
 }, [query]);
 
-
-useEffect(() => {
-    // Do something whenever category or search changes
-    console.log("Category changed:", category);
-    console.log("Search changed:", query);
-
-    // For example, fetch filtered recipes here
-  }, [category, query]);
-
-
-    useEffect(() => {
-    async function fetchMeals(category: string) {
+  useEffect(() => {
+    async function fetchMeals(category: string, letter?: string) {
       try {
-          const data = await getMealsByCategory(category);
-          //console.log(data);
-          setMeals(data);
-        
+
+          if(category == 'All'){
+            const data = await getMealsByLetter(letter || "A");
+            setMeals(data);
+
+          }else{
+            const data = await getMealsByCategory(category);
+            setMeals(data);
+          }
       } catch (error) {
         console.log("Error filtering", error);
       }
     }
 
     if(category)
-      fetchMeals(category);
+      fetchMeals(category, letter);
 
-}, [category]);
+}, [category, letter]);
 
 
 
@@ -99,7 +95,7 @@ useEffect(() => {
 
           return(
             <View className={cn('flex-1 max-w-[48%]', !isEven ? 'mt-20' : 'mt-0')}>
-              <MenuCard meal={item as Meal} />
+              <MealCard meal={item as Meal} />
             </View>
           )
         }} 
@@ -107,7 +103,7 @@ useEffect(() => {
         contentContainerClassName='gap-7 px-5 pb-32'
         
         ListEmptyComponent={
-          <Text>No Results!</Text>
+          <Text className='text-center text-xl font-bold text-theme_primary'>No Results!</Text>
         }
         />
     </SafeAreaView>

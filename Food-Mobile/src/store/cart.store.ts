@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import { type Meal } from "@/lib/tmdb";
 
-type CartItem = {
+export type CartItem = {
   meal: Meal;
   quantity: number;
   price: number;
@@ -119,6 +119,7 @@ getItems: () => {
 };
     }),
 
+    //not using?
   clearCart: () => set({ items: [],
 totalPrice: 0,
 totalItems: 0 }),

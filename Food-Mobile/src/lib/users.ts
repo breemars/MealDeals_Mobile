@@ -8,6 +8,7 @@ import {
 } from "firebase/firestore";
 
 import { db, auth } from "./firebase";
+import { signOut } from "firebase/auth";
 
 export async function createUserProfile(
   name: string
@@ -32,36 +33,35 @@ export async function createUserProfile(
     }
 }
 
-
-
-
-/////for later
-
-export async function getUserProfile(uid: string) {
-  if (!auth.currentUser || auth.currentUser.uid !== uid) {
-    throw new Error("You can only access your own profile.");
+export async function getUserProfile() {
+  if (!auth.currentUser) {
+    throw new Error("No User Authenticated");
   }
 
-  const snapshot = await getDoc(doc(db, "users", uid));
+  const snapshot = await getDoc(doc(db, "User", auth.currentUser.uid));
 
-  if (!snapshot.exists()) {
-    return null;
-  }
-
-  return snapshot.data();
+  return snapshot?.data();
 }
 
+
 export async function updateUserProfile(
-  uid: string,
   updates: {
-    firstName?: string;
-    lastName?: string;
-    address?: string;
+    name?: string;
   }
 ) {
-  if (!auth.currentUser || auth.currentUser.uid !== uid) {
-    throw new Error("You can only update your own profile.");
+  if (!auth.currentUser) {
+    throw new Error("No User Authenticated");
   }
 
-  await updateDoc(doc(db, "users", uid), updates);
+  await updateDoc(doc(db, "User", auth.currentUser.uid), updates);
+}
+
+
+export async function logoutUser() {
+  try {
+    await signOut(auth);
+    console.log("User logged out");
+  } catch (error) {
+    console.log("Logout error:", error);
+  }
 }

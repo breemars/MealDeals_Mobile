@@ -10,7 +10,7 @@ import useAuthStore from '@/store/auth.store'
 const signin = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [form, setForm] = useState({ email: '', password: ''})
-  const { fetchAuthenticatedUser } = useAuthStore()
+  const { updateAuthenticatedUser } = useAuthStore()
  
   const onSubmit = async() => {
     if(!form.email || !form.password) Alert.alert('Error', "Please enter valid email address and password.")
@@ -29,7 +29,7 @@ const signin = () => {
       console.log("success")
 
       //Update user info in the store
-      fetchAuthenticatedUser()
+      updateAuthenticatedUser()
 
       router.replace("../(tabs)/")
     } catch (error : any) {
@@ -40,7 +40,7 @@ const signin = () => {
   }
 
   return (
-    <View className='gap-10 rounded-lg p-5 mt-5 bg-orange-100'>
+    <View className='gap-10 rounded-lg p-5 mt-5'>
       
       <Text className='font-semibold'>Email</Text>
       <TextInput

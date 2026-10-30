@@ -1,7 +1,7 @@
 import useAuthStore from '@/store/auth.store';
 import { Redirect, Slot } from 'expo-router';
 import { Pizza } from 'lucide-react-native';
-import { Dimensions, ImageBackground, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
+import { Dimensions, Image, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native'
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const AuthLayout = () => {
@@ -19,10 +19,24 @@ const AuthLayout = () => {
       <ScrollView className='h-full' keyboardShouldPersistTaps='handled'>
         <View className='w-full relative h-96 bg-black'>
           
-          {/*<ImageBackground source="" className='size-full rounded-b-lg'  resizeMode='stretch' />8*/}
+          {/* Background image */}
+            <Image
+              source={{
+                uri: "https://www.themealdb.com/images/media/meals/ytogg31784397116.jpg"
+              }}
+              className="absolute inset-0 w-full h-full"
+              resizeMode="cover"
+            />
+
+  
+
+            {/* Dark overlay */}
+            <View className="absolute inset-0 bg-black/40 border-b-8" />
+
+          
         
           {/* Logo */}
-          <View className='self-center size-36 bg-orange-100 rounded-full absolute -bottom-12 z-10 justify-center items-center'>
+          <View className='self-center size-36 bg-[#F2F2F2] rounded-full absolute -bottom-12 z-10 justify-center items-center border-8'>
             <Pizza size={80} color="#ff6600" strokeWidth={1.5} />
           </View>
         </View>

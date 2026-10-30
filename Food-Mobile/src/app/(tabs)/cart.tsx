@@ -1,4 +1,5 @@
-import useCartStore from '@/store/cart.store'
+import CartItemCard from '@/components/CartItemCard'
+import useCartStore, { CartItem } from '@/store/cart.store'
 import { View, Text, FlatList, TouchableOpacity } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
@@ -10,12 +11,12 @@ const cart = () => {
     <SafeAreaView>
       <FlatList
         data={items}
-        renderItem={({item}) => <Text>ITEM</Text>}
-        contentContainerClassName='pb-28 px-5 pt-5'
+        renderItem={({item}) => <CartItemCard {...item} />}
+        contentContainerClassName='pb-28 px-5 pt-5 gap-4'
         ListFooterComponent={() =>
         totalPrice > 0 && (
-<View>
-            <View className='mt-6 gap-2 border border-gray-500 p-5 rounded-2xl bg-white'>
+          <View>
+            <View className='mt-2 gap-2 border border-gray-500 p-5 rounded-2xl bg-white'>
               <Text className='font-bold text-gray-800 mb-1 text-lg'>Payment Summary</Text>
               
               <View className='flex-row justify-between'>
@@ -48,7 +49,7 @@ const cart = () => {
 
         )
         }
-        ListEmptyComponent={<Text>Cart is Empty</Text>}>
+        ListEmptyComponent={<Text className='text-center text-xl font-bold text-theme_primary mt-40'>Cart is Empty</Text>}>
 
 
       </FlatList>

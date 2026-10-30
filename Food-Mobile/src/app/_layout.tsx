@@ -8,7 +8,7 @@ import useAuthStore from '@/store/auth.store';
 
 export default function RootLayout() {
 
-const { isLoading, fetchAuthenticatedUser } = useAuthStore()
+const { isLoading, updateAuthenticatedUser } = useAuthStore()
 
 const [fontsLoaded, error] = useFonts({
   "Quicksand-Regular": require("../../assets/fonts/Quicksand-Regular.ttf"),
@@ -25,7 +25,7 @@ useEffect(() => {
 }), [fontsLoaded, error]
 
 useEffect(() => {
-  fetchAuthenticatedUser()
+  updateAuthenticatedUser()
 }, [])
 
 if(isLoading) return null; //?

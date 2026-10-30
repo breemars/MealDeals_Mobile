@@ -10,7 +10,7 @@ const signup = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [form, setForm] = useState({ name: '', email: '', password: ''})
-  const { fetchAuthenticatedUser } = useAuthStore()
+  const { updateAuthenticatedUser } = useAuthStore()
  
   const onSubmit = async() => {
 
@@ -38,7 +38,7 @@ const signup = () => {
       Alert.alert('Succcess', "Signed-Up Successfully")
 
       //Update user info in the store
-      fetchAuthenticatedUser()
+      updateAuthenticatedUser()
 
       router.replace("../(tabs)/") //????????????
     } catch (error : any) {
@@ -50,7 +50,7 @@ const signup = () => {
 
 
   return (
-    <View className='gap-10 rounded-lg p-5 mt-5 bg-yellow-100'>
+    <View className='gap-10 rounded-lg p-5 mt-5'>
 
       <Text className='font-semibold'>Name</Text>
             <TextInput
